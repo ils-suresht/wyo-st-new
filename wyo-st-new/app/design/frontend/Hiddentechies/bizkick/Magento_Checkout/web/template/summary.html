@@ -1,0 +1,46 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="opc-block-summary checkout_white_box" data-bind="blockLoader: isLoading">
+    <div class="checkout_white_box">
+        <div class="bottom_row bottom_row_xs p-3 heading_text">Order Summary</div>
+        <div class="bottom_row bottom_row_xs">            
+            <!-- ko foreach: elems() -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!-- /ko -->
+        </div>
+        <div class="p-3 bottom_row bottom_row_xs">
+            <div class="row">
+                <div class="col-6">
+                    <div class="input_box mt-2">
+                        <input class="form-control font12 py-2" type="text" placeholder="Have a coupon code?">
+                        <button class="btn px-3 font12 text-white primary_bg rounded-0">APPLY</button>
+                    </div>
+                </div>
+                <div class="col-6 font14">
+                    <div class="row align-items-center justify-content-end">
+                        <div class="col-4">Subtotal:</div>
+                        <div class="col-5 text-right">₹798.00</div>
+                    </div>
+                    <div class="row align-items-center justify-content-end">
+                        <div class="col-4">Shipping</div>
+                        <div class="col-5 text-right">FREE</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-3">
+            <div class="col-6 ml-auto pr-0">
+                <div class="font16 heading_text">
+                    <div class="row align-items-center justify-content-end">
+                        <div class="col-4">Total</div>
+                        <div class="col-5 text-right">₹798.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

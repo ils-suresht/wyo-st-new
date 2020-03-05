@@ -1,0 +1,110 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!-- ko ifnot: isCustomerLoggedIn() -->
+
+<!-- ko foreach: getRegion('before-login-form') -->
+<!-- ko template: getTemplate() --><!-- /ko -->
+<!-- /ko -->
+<form class="form form-login" data-role="email-with-possible-login"
+      data-bind="submit:login"
+      method="post">
+    <fieldset id="customer-email-fieldset" class="fieldset" data-bind="blockLoader: isLoading">
+        <!-- <div class="">
+            <label class="label" for="customer-email">
+                <span data-bind="i18n: 'Email Address'"></span>
+            </label>
+            <div class="">                                
+            </div>
+        </div> -->
+
+        <div class="checkout_white_box">
+            <div class="bottom_row bottom_row_xs p-3 heading_text">Login or Signup</div>
+            <div class="p-3">
+                <div class="d-flex">
+                    <div class="w-100 field required">
+                        <div class="checkout_fields _with-tooltip">
+                            <input class="input-text"
+                                type="email"
+                                data-bind="
+                                        textInput: email,
+                                        hasFocus: emailFocused,
+                                        mageInit: {'mage/trim-input':{}}"
+                                name="username"
+                                data-validate="{required:true, 'validate-email':true}"
+                                id="customer-email" />
+                                <!-- !-- ko template: 'ui/form/element/helper/tooltip' --!-- /ko -- -->
+                        </div>
+
+                        <!--Hidden fields -->
+                        <fieldset class="fieldset hidden-fields" data-bind="fadeVisible: isPasswordVisible">
+                            <div class="field">
+                               <div class="control checkout_fields">
+                                    <input class="input-text form-control font12"
+                                        data-bind="
+                                                attr: {
+                                                    placeholder: $t('Password'),
+                                                }"
+                                        type="password"
+                                        name="password"
+                                        id="customer-password"
+                                        data-validate="{required:true}" autocomplete="off"/>
+                                    <span class="note" data-bind="i18n: 'You already have an account with us. Sign in or continue as guest.'"></span>
+                                </div>
+                            </div>
+                            <!-- ko foreach: getRegion('additional-login-form-fields') -->
+                            <!-- ko template: getTemplate() --><!-- /ko -->
+                            <!-- /ko -->
+                            <div class="actions-toolbar">
+                                <input name="context" type="hidden" value="checkout" />
+                                <div class="primary w-100">
+                                    <button type="submit" class="action login btn checkout_buttons primary_bg text-white text-center font14 w-100" data-action="checkout-method-login"><span data-bind="i18n: 'Login'"></span></button>
+                                </div>                                    
+                                <div class="secondary row font10">
+                                    <div class="col-6">
+                                        <div>                                    
+                                            <span class="note" data-bind="fadeVisible: isPasswordVisible() == false"><!-- ko i18n: 'You can create an account after checkout.'--><!-- /ko --></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-right">
+                                            <a class="action remind" data-bind="attr: { href: forgotPasswordUrl }">
+                                                <span data-bind="i18n: 'Forgot Your Password?'"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <!--Hidden fields -->                                                                        
+                    </div>
+                    <div class="or_circle_cont mx-2" data-bind="fadeVisible: isPasswordVisible">
+                        <div class="or_line"></div>
+                        <div class="or_circle">OR</div>
+                    </div>
+                    <div class="w-100" data-bind="fadeVisible: isPasswordVisible">
+                        <button class="btn checkout_buttons text-white font14 w-100 fb_btn">
+                            <div class="d-flex align-items-center h-100">
+                                <div class="icon-facebook-logo logo"></div>
+                                <div class="ml-3">Login with Facebook</div>
+                            </div>
+                        </button>
+                        <button class="btn checkout_buttons text-white font14 w-100 google_btn">
+                            <div class="d-flex align-items-center h-100">
+                                <div class="icon-google-logo logo"></div>
+                                <div class="ml-3">Login with Google</div>
+                            </div>
+                        </button>
+                        <button class="btn checkout_buttons bg-white text-center font14 w-100 guest_btn">Checkout as Guest</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </fieldset>
+</form>
+<!-- /ko -->

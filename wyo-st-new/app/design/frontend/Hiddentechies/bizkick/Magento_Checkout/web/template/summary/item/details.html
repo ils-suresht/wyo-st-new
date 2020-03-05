@@ -1,0 +1,81 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<!-- ko foreach: getRegion('before_details') -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+<!-- /ko -->
+<div class="product-item-details">
+
+    <div class="product-item-inner">
+        <div class="product-item-name-block">
+            <strong class="product-item-name font14 heading_text" data-bind="html: $parent.name"></strong>
+            <!-- <div class="details-qty">
+                <span class="label">!-- ko i18n: 'Qty' --!-- /ko --</span>
+                <span class="value" data-bind="text: $parent.qty"></span>
+            </div> -->
+        </div>
+        <!-- ko foreach: getRegion('after_details') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        <!-- /ko -->
+    </div>
+
+    <div class="d-flex align-items-center my-2">
+        <!-- ko if: (JSON.parse($parent.options).length > 0)-->
+        <!--ko foreach: JSON.parse($parent.options)-->
+            <div class="custom_select d-flex">
+                <select class="font10 pl-2 pr-4 w-100">                    
+                    <!-- ko if: ($data.full_view)-->
+                    <option data-bind="html: full_view"></option>
+                    <!-- /ko -->
+                    <!-- ko ifnot: ($data.full_view)-->
+                    <option data-bind="html: value"></option>
+                    <!-- /ko -->                                            
+                </select>
+            </div>
+        <!-- /ko -->
+        <!-- /ko -->
+
+        <!-- <div class="custom_select mx-2 position-relative d-flex align-items-center">
+            <div class="color_circle" style="background: #BA2125;"></div>
+            <select class="font10 px-4 w-100">
+                <option value="#BA2125">Red</option>
+            </select>
+        </div> -->
+        <div class="d-flex align-items-center">
+            <button class="primary_bg counter_btn">
+                <i class="icon-minus font10"></i>
+            </button>
+            <input type="text" class="form-control text-center counter_input font10" data-bind="text: $parent.qty">
+            <button class="primary_bg counter_btn">
+                <i class="icon-plus font10"></i>
+            </button>
+        </div>
+    </div>
+
+    
+    <!-- <div class="product options" data-bind="mageInit: {'collapsible':{'openedState': true}}">
+        <span data-role="title" class="toggle">!-- ko i18n: 'View Details' --!-- /ko --</span>
+        <div data-role="content" class="content">
+            <strong class="subtitle">!-- ko i18n: 'Options Details' --!-- /ko --</strong>
+            <dl class="item-options">
+                !--ko foreach: JSON.parse($parent.options)--
+                !-- <dt class="label" data-bind="text: label"></dt> --
+                    !-- ko if: ($data.full_view)--
+                    <dd class="values" data-bind="html: full_view"></dd>
+                    !-- /ko --
+                    !-- ko ifnot: ($data.full_view)--
+                    <dd class="values" data-bind="html: value"></dd>
+                    !-- /ko --
+                !-- /ko --
+            </dl>
+        </div>
+    </div> -->
+    
+</div>
+<!-- ko foreach: getRegion('item_message') -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+<!-- /ko -->

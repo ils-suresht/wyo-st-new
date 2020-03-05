@@ -1,0 +1,103 @@
+<?php
+    $helper = $this->helper('Hiddentechies\Bizkick\Helper\Data');
+    $ishome = $helper->getIsHome();
+    if ($ishome) {
+?>
+<!-- Home page categories showcase below the main slider -->
+
+<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('homepage-category-subcategory')->toHtml(); ?>
+			
+<?php
+	echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('bizkick-below')->toHtml();   
+?>
+
+<!----------------- Customization for best seller block (To-do: Move to seperate block wise structure) ------------------>
+
+<?php  
+    echo '<div class="main_container">
+            <div class="heading_text font22">Explore Our Best Sellers</div>';
+        
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+    // Use for best seller products
+    /*
+    $productCollection = $objectManager->create('Magento\Reports\Model\ResourceModel\Report\Collection\Factory'); 
+    $collection = $productCollection->create('Magento\Sales\Model\ResourceModel\Report\Bestsellers\Collection'); 
+    $collection->setPeriod('year');
+    foreach ($collection as $item) {
+        print_r($item->getData());
+    }
+    */
+
+    $categoryFactory = $objectManager->get('\Magento\Catalog\Model\CategoryFactory');
+    $categoryHelper = $objectManager->get('\Magento\Catalog\Helper\Category');
+    $categoryRepository = $objectManager->get('\Magento\Catalog\Model\CategoryRepository');
+    $store = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore();
+
+    // get the list of all categories
+    $categoryCollection = $objectManager->get('\Magento\Catalog\Model\ResourceModel\Category\CollectionFactory');
+    $categories = $categoryCollection->create();
+    $categories->addAttributeToSelect('*');    
+
+    // get current store’s categories 
+    $categoryHelper = $objectManager->get('\Magento\Catalog\Helper\Category');
+    $categories = $categoryHelper->getStoreCategories();
+
+    echo '<div class="nav_tabs my-3"><ul class="nav nav-pills nav-justified flex-nowrap overflow-auto">';
+    $counterr = 1;
+    foreach ($categories as $category) {
+        $active = $counterr === 1 ? 'active' : '';   
+        echo '<li class="nav-item"><a href="javascript:void(0)" class="nav-link '.$active.'" onclick="openCategory(event, '.$category->getId().')">'.strtoupper($category->getName()).'</a></li>';
+        $counterr++;
+    }
+    echo '</ul></div>';
+    echo '<div class="mt-2">';
+
+    $counter = 1;
+    foreach ($categories as $category) { 
+        $display_block = $counter === 1 ? 'style="display:flex"' : '';   
+        
+        echo '<div id="'.$category->getId().'" class="wyo_products row no-display" '.$display_block.'>';
+        
+        $categoryId = $category->getId();
+        $category = $categoryFactory->create()->load($categoryId);
+
+        $categoryProducts = $category->getProductCollection()->addAttributeToSelect('*');
+        
+        foreach ($categoryProducts as $product) 
+        {
+            $imageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $product->getImage();                
+                echo '<div class="item col-xl-2 col-lg-3 col-md-4 col-6">
+                        <div class="t-shirt_box">
+                            <img src="'.$imageUrl.'" width="230" class="img-fluid"/>
+                        </div>
+                        <div class="mt-2">'.$product->getName().'</div>
+                        <div class="mt-1">
+                            From <del class="gray_text">₹499.00</del c>&nbsp;<span class="roboto_bold">'.$product->getPrice().'</span>
+                        </div>
+                    </div>';
+        }                                
+        echo '</div>';
+        $counter++;
+    }    
+    echo '</div>';
+echo '</div>';
+?>
+<script>
+    function openCategory(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("no-display");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("nav-link");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "flex";
+        evt.currentTarget.className += " active";
+    }
+</script>
+<?php } // Home Page Code Block ?>
+
+<!-- Customization for best seller block ends -->

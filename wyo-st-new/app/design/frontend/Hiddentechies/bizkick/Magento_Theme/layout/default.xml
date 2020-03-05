@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="default_head_blocks"/>
+		<referenceContainer name="header.container">
+			<referenceContainer name="header-wrapper" label="Page Header" htmlTag="div" htmlClass="sprd-header__flex-wrapper main_container nav_menu align-items-end d-flex">
+				<block class="Magento\Theme\Block\Html\Header\Logo" name="logo">
+						<arguments>
+							<argument name="logo_img_width" xsi:type="number">189</argument>
+							<argument name="logo_img_height" xsi:type="number">64</argument>
+						</arguments>
+				</block>
+				<block class="Magento\Framework\View\Element\Template" name="header-top-section" template="Hiddentechies_Bizkick::topheader.phtml" after="logo"  />
+				<block class="Magento\Framework\View\Element\Html\Links" name="header.links" before="minicart" >
+					<arguments>
+						<argument name="css_class" xsi:type="string">header links</argument>
+					</arguments>
+				</block>				
+			</referenceContainer>
+        </referenceContainer>
+		<move element="minicart" destination="header-wrapper" after="header.links" />
+		<move element="top.search" destination="header-wrapper" after="header-top-section" />		
+</page>

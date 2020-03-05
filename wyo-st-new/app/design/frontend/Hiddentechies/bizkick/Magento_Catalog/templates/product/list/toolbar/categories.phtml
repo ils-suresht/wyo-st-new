@@ -1,0 +1,40 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * Product list toolbar
+ *
+ * @var $block \Magento\Catalog\Block\Product\ProductList\Toolbar
+ */
+ 
+ $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$currentCategory = $objectManager->get('Magento\Framework\Registry')->registry('current_category');
+$childCategories = $currentCategory->getChildrenCategories();
+/* echo "Current Cat: " . $currentCategory->getName() . "<br>";
+foreach ($childCategories as $childCategory) {
+    echo $childCategory->getUrl() . "<br>";
+    echo $childCategory->getName() . "<br>";
+} */
+?>
+<div>
+    <div class="d-flex pb-md-0 pb-4 overflow-auto">
+        <div class="filter_product_tag"><a href="<?php echo $currentCategory->getUrl(); ?>"><?php echo $currentCategory->getName(); ?></a></div>	
+		<?php
+			foreach ($childCategories as $childCategory) {
+				
+				echo "<div class='filter_product_tag'><a href='".$childCategory->getUrl()."' >" .$childCategory->getName(). "</a></div>";
+				//echo $childCategory->getUrl() . "<br>";
+				//echo $childCategory->getName() . "<br>";
+			}
+			?>
+
+<!--        <div class="filter_product_tag">Women</div>
+        <div class="filter_product_tag">Kids & Babies</div>
+        <div class="filter_product_tag">Couples</div>
+        <div class="filter_product_tag">Family</div> -->
+    </div>
+</div>

@@ -1,0 +1,82 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+?>
+<?php
+/**
+ * Template for filter items block
+ *
+ * @var $block \Magento\LayeredNavigation\Block\Navigation\FilterRenderer
+ */
+?>
+
+<ol class="items rds1">
+	<?php 
+		$current_parent = 0; 
+		$prev_cat_id = 0;
+	
+	?>
+    <?php foreach ($filterItems as $filterItem) : ?>
+	<?php 
+		//echo "<pre>"; print_r($filterItem->debug()); die("RD");
+		$parentid = explode("pid", $filterItem->getLabel());  // Coverting filteritem data into the two parts. First will have the name and second will have the parent id if any.
+
+//echo $filterItem->getValue();
+/* 		echo "parentid : ". $current_parent . "<br>"; 
+		echo "prev_cat : ". $prev_cat_id . "<br>";  */
+		
+		if( $prev_cat_id == 0 ) {
+		?>
+			<li class="item"><a href="<?= $block->escapeUrl($filterItem->getUrl()) ?>"><?= $parentid[0]; ?></a></li>
+		<?php
+		
+			$prev_cat_id = $filterItem->getValue();	
+			
+			if(isset($parentid[1])) {
+				
+				$current_parent = $parentid[1];
+			}			
+
+		}
+		else if( $prev_cat_id > 0 ){
+			
+			if( isset($parentid[1]) ) {
+				
+				if( $prev_cat_id == $parentid[1]  ) {
+		?>
+					<li class="subitem"><a href="<?= $block->escapeUrl($filterItem->getUrl()) ?>"><?= $parentid[0]; ?></a></li>
+		<?php
+				}
+				else {
+		?>
+					<li class="item"><a href="<?= $block->escapeUrl($filterItem->getUrl()) ?>"><?= $parentid[0]; ?></a></li>
+		<?php
+				}
+				$prev_cat_id = $filterItem->getValue();		
+				$current_parent = $parentid[1];		
+			}
+			else {
+		?>
+				<li class="item"><a href="<?= $block->escapeUrl($filterItem->getUrl()) ?>"><?= $parentid[0]; ?></a></li>
+		<?php
+				$prev_cat_id = $filterItem->getValue();		
+			}
+		}
+		else {
+				
+		?>
+				<li class="item"><a href="<?= $block->escapeUrl($filterItem->getUrl()) ?>"><?= $parentid[0]; ?></a></li>
+		<?php
+				$prev_cat_id = $filterItem->getValue();
+				if(isset($parentid[1])) {
+					
+					$current_parent = $parentid[1];
+				}
+			}
+		?>
+    <?php endforeach ?>
+</ol>

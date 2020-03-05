@@ -1,0 +1,55 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * Product list toolbar
+ *
+ * @var $block \Magento\Catalog\Block\Product\ProductList\Toolbar
+ */
+
+// phpcs:disable Magento2.Security.IncludeFile.FoundIncludeFile
+// phpcs:disable PSR2.Methods.FunctionCallSignature.SpaceBeforeOpenBracket
+?>
+<?php if ($block->getCollection()->getSize()) :?>
+    <?php $widget = $this->helper(\Magento\Framework\Json\Helper\Data::class)->jsonDecode($block->getWidgetOptionsJson());
+        $widgetOptions = $this->helper(\Magento\Framework\Json\Helper\Data::class)->jsonEncode($widget['productListToolbarForm']);
+    ?>
+
+    <div class="bottom_row pb-1">
+        <div class="row">
+            <div class="col-lg-9 col-md-8">
+                <?php if ($block->isExpanded()) :?>
+                    <?php include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/categories.phtml')) ?>
+                <?php endif; ?>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="d-flex align-items-center justify-content-md-end">
+                    <div class="d-flex align-items-center justify-content-md-end">
+                        <?php // include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/amount.phtml')) ?>
+
+                        <?php // echo $block->getPagerHtml() ?>
+
+                        <?php // include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/limiter.phtml')) ?>
+
+                        <?php if ($block->isExpanded()) :?>
+                            <?php include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/sorter.phtml')) ?>
+                            
+                        <?php endif; ?>                        
+                    </div>
+                    <div class="d-md-none d-block ml-auto">
+                        <button class="btn primary_bg text-white rounded-0" data-toggle="collapse" data-target="#sidebarToggler" aria-controls="sidebarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                            <div class="d-flex align-items-center font14 py-1 px-2">
+                                <div class="icon-filter mr-3"></div>
+                                <div>Filters</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>        
+<?php endif ?>

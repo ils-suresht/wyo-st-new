@@ -1,0 +1,148 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+// @codingStandardsIgnoreFile
+?>
+<?php
+$helper = $this->helper('Hiddentechies\Bizkick\Helper\Data');
+// $showNewsletter = $helper->getConfigValue('bizkicksettings/newsletter_settings/enable');
+$showFooterColumns = $helper->getConfigValue('bizkicksettings/footer_columns/enable_footer_columns');
+// $footerStColumnSelect = $helper->getConfigValue('bizkicksettings/footer_columns/footer_st_column_select');
+// $footerStColumn = $helper->getConfigValue('bizkicksettings/footer_columns/footer_st_column');
+// $footerNdColumn = $helper->getConfigValue('bizkicksettings/footer_columns/footer_nd_column');
+// $footerRdColumn = $helper->getConfigValue('bizkicksettings/footer_columns/footer_rd_column');
+
+// $address = $helper->getConfigValue('bizkicksettings/footer_contant/address');
+$email = $helper->getConfigValue('bizkicksettings/footer_contant/email');
+$email = !empty($email) ? $email : '';
+$phone = $helper->getConfigValue('bizkicksettings/footer_contant/phone');
+$phone = !empty($phone) ? $phone : '';
+
+$enableFooterBottom = $helper->getConfigValue('bizkicksettings/footer_bottom/enable_footer_bottom');
+$copyrightText = $helper->getConfigValue('bizkicksettings/footer_bottom/copyright_text');
+$copyrightRightBlock = $helper->getConfigValue('bizkicksettings/footer_bottom/copyright_right_block');
+
+$newsletterTitle = $helper->getConfigValue('bizkicksettings/newsletter_settings/title');
+$newsletterStatic = $helper->getConfigValue('bizkicksettings/newsletter_settings/newsletter_static');
+?>
+<div class="footer-top">
+    <?php /*if ($showNewsletter) { ?>
+        <div class="footer-newsletter">
+            <div class="page-main">
+                <?php echo $this->getChildHtml('form.subscribe'); ?>
+            </div>
+        </div>
+    <?php } */ ?>
+    <?php if ($showFooterColumns) { ?>
+        <div class="footer footer_bg py-4">
+            <div class="main_container">
+                <?php if($this->getRequest()->getFullActionName() === 'catalog_product_view') { ?>
+                    <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer-wyo-content-product')->toHtml(); ?>
+                <?php } else { ?>
+                    <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer-wyo-content')->toHtml(); ?>
+                <?php } ?>                
+                <hr/>
+                <div class="row justify-content-center mt-4 pb-2">
+                    <div class="col-xl-2 col-lg-3 col-md-3">
+                        <div class="mt-3 row">
+                            <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer-category-newsletter-logo')->toHtml(); ?>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-9 col-md-9">
+                        <div class="d-flex flex-md-nowrap flex-wrap justify-content-between">
+                            <div class="footer_menu">                                
+                                <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer-category-newsletter-first')->toHtml(); ?>
+                            </div>
+                            <div class="footer_menu">
+                                <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer-category-newsletter-second')->toHtml(); ?>
+                            </div>
+                            <div class="footer_menu">                                
+                                <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer-category-newsletter-third')->toHtml(); ?>
+                            </div>
+                            <div class="footer_menu">                                
+                                <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer-category-newsletter-fourth')->toHtml(); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-6 col-md-8 text-lg-right text-center mt-xl-0 mt-4">
+                        <?php 
+							if ($newsletterStatic != '') {
+								//echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($newsletterStatic)->toHtml();
+							}
+						?>
+                        <div class="heading_text mt-3"><?= $newsletterTitle ?></div>
+                        <div class="input_box mt-2">                            
+							<form class="form subscribe"
+								  novalidate
+								  action="<?php /* @escapeNotVerified */ echo $block->getFormActionUrl() ?>"
+								  method="post"
+								  data-mage-init='{"validation": {"errorClass": "mage-error"}}'
+								  id="newsletter-validate-detail">
+								
+                                    <input name="email" type="email" id="newsletter" class="form-control font14"
+                                            placeholder="<?php /* @escapeNotVerified */ echo __('Email Address') ?>"
+                                            data-validate="{required:true, 'validate-email':true}"/>
+									
+									<button class="btn px-3 font14 text-white" title="<?php /* @escapeNotVerified */ echo __('Join Newsletter') ?>" type="submit">
+										<span><?php /* @escapeNotVerified */ echo __('Join Newsletter') ?></span>
+									</button>								
+							</form>						
+                        </div>
+                        <div class="d-flex align-items-center justify-content-lg-end justify-content-center mt-4">
+                            <div class="heading_text_reg" style="opacity: 0.4;">Need Help?</div>
+                            <div class="d-flex align-items-center mx-4">
+                                <div class="icon-phone-call mr-2 icon_blue"></div>
+                                <div class="font14"><?= $phone ?></div>
+                            </div>
+                            <div class="d-flex align-items-center font14">
+                                <div class="icon-envelope mr-2 icon_blue"></div>
+                                <div class="font14"><?= $email ?></div class="font14">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <?php if ($enableFooterBottom) { ?>   
+                    <div class="row align-items-center mt-4 pb-2">
+                        <div class="col-xl-2 col-lg-3">
+                            <div class="font12 text-lg-left text-center">
+                                <?php /* @escapeNotVerified */ echo $copyrightText; ?>
+                            </div>
+                        </div>
+                        <div class="col-xl-8 col-lg-6 text-center">
+                            <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer-copyright-center')->toHtml(); ?>
+                        </div>
+                        <div class="col-xl-2 col-lg-3 text-lg-right text-center">            
+                            <?php if ($copyrightRightBlock != '') { ?>
+                                <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($copyrightRightBlock)->toHtml(); ?>
+                            <?php } ?>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+    <?php } ?>
+</div>
+
+<script type="text/javascript" xml="space">
+    require(['jquery'], function() {
+        var windowWidth = jQuery(window).width();
+        if (windowWidth < 768) {
+            jQuery('.footer-links-column .footer-column-content').hide();
+            jQuery(document).on('click', '.footer-links-column', function() {
+                jQuery(this).addClass('active-column');
+                jQuery(this).find('.footer-column-content').slideDown();
+            });
+            jQuery(document).on('click', '.footer-column-content', function(e) {
+                e.preventdefault();
+                return false;
+            });
+            jQuery(document).on('click', '.footer-links-column.active-column', function() {
+                jQuery(this).removeClass('active-column');
+                jQuery(this).find('.footer-column-content').slideUp();
+            });
+        }
+    });
+</script>
